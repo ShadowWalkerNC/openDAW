@@ -11,34 +11,33 @@ component
     display: flex
     align-items: center
     column-gap: 0.5em
-    padding: 0.7em 1.35em
-    border-radius: 4px
-    border: 1px solid rgba(231, 239, 232, 0.22)
+    padding: 0.7em 1.25em
+    border-radius: 10px
+    border: 1px solid rgba(255, 255, 255, 0.16)
     background: transparent
-    color: #e7efe8
+    color: #f5f5f5
     cursor: pointer
     font: inherit
-    font-family: Figtree, Rubik, sans-serif
+    font-family: Inter, Rubik, sans-serif
     font-size: $fs-l
     font-weight: 500
     white-space: nowrap
-    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease
+    transition: background 0.16s ease, border-color 0.16s ease, color 0.16s ease, transform 0.16s ease
 
     &:first-child
-      border-color: #d2f26b
-      background: #d2f26b
-      color: #121a17
+      border-color: #39ff14
+      background: #39ff14
+      color: #0a0a0a
 
       &:hover
-        background: #e2ff8a
-        border-color: #e2ff8a
-        color: #0f1412
+        background: #5dff3d
+        border-color: #5dff3d
         transform: translateY(-1px)
 
     &:not(:first-child):hover
-      border-color: rgba(210, 242, 107, 0.55)
-      background: rgba(210, 242, 107, 0.08)
-      color: #e7efe8
+      border-color: #00f3ff
+      color: #00f3ff
+      background: rgba(0, 243, 255, 0.06)
       transform: translateY(-1px)
 
     > svg

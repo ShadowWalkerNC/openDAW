@@ -23,9 +23,9 @@ export const Dashboard = ({lifecycle, service}: Construct) => {
     document.title = ProductBrand.documentTitle
     return (
         <div className={className}>
-            <div className="atmosphere" aria-hidden="true"/>
+            <div className="scanlines" aria-hidden="true"/>
             <header className="hero">
-                <div className="brand-mark"/>
+                <div className="banner">{ProductBrand.banner}</div>
                 <h1>{ProductBrand.name}</h1>
                 <p className="tagline">{ProductBrand.tagline}</p>
                 <p className="support">{ProductBrand.support}</p>

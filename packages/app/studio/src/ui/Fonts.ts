@@ -19,28 +19,34 @@ export const Fonts = {
         "font-style": "normal",
         "src": "/fonts/OpenSans-Regular.ttf"
     },
-    SyneBold: <FontFaceProperties>{
-        "font-family": "Syne",
+    GeistSemibold: <FontFaceProperties>{
+        "font-family": "Geist",
+        "font-weight": 600,
+        "font-style": "normal",
+        "src": "/fonts/geist-600.woff2"
+    },
+    GeistBold: <FontFaceProperties>{
+        "font-family": "Geist",
         "font-weight": 700,
         "font-style": "normal",
-        "src": "/fonts/syne-700.woff2"
+        "src": "/fonts/geist-700.woff2"
     },
-    SyneExtraBold: <FontFaceProperties>{
-        "font-family": "Syne",
-        "font-weight": 800,
-        "font-style": "normal",
-        "src": "/fonts/syne-800.woff2"
-    },
-    Figtree: <FontFaceProperties>{
-        "font-family": "Figtree",
+    Inter: <FontFaceProperties>{
+        "font-family": "Inter",
         "font-weight": 400,
         "font-style": "normal",
-        "src": "/fonts/figtree-400.woff2"
+        "src": "/fonts/inter-400.woff2"
     },
-    FigtreeMedium: <FontFaceProperties>{
-        "font-family": "Figtree",
+    InterMedium: <FontFaceProperties>{
+        "font-family": "Inter",
         "font-weight": 500,
         "font-style": "normal",
-        "src": "/fonts/figtree-500.woff2"
+        "src": "/fonts/inter-500.woff2"
+    },
+    JetBrainsMono: <FontFaceProperties>{
+        "font-family": "JetBrains Mono",
+        "font-weight": 400,
+        "font-style": "normal",
+        "src": "/fonts/jetbrains-mono-400.woff2"
     }
 }

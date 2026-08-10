@@ -9,10 +9,11 @@ export class FontLoader {
             loadFont(Fonts.Rubik),
             loadFont(Fonts.RubikBold),
             loadFont(Fonts.OpenSans),
-            loadFont(Fonts.SyneBold),
-            loadFont(Fonts.SyneExtraBold),
-            loadFont(Fonts.Figtree),
-            loadFont(Fonts.FigtreeMedium)
+            loadFont(Fonts.GeistSemibold),
+            loadFont(Fonts.GeistBold),
+            loadFont(Fonts.Inter),
+            loadFont(Fonts.InterMedium),
+            loadFont(Fonts.JetBrainsMono)
         ])
     }
 }

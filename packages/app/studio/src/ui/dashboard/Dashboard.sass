@@ -2,12 +2,13 @@
 @use "tokens" as *
 
 component
-  --desk-ink: #0f1412
-  --desk-panel: rgba(18, 28, 24, 0.72)
-  --desk-line: rgba(210, 242, 107, 0.55)
-  --desk-accent: #d2f26b
-  --desk-mist: #9aada2
-  --desk-paper: #e7efe8
+  --obsidian: #121212
+  --obsidian-panel: #1a1a1a
+  --neon: #39ff14
+  --cyan: #00f3ff
+  --amber: #ff8a00
+  --ink: #f5f5f5
+  --mute: #8a8a8a
   position: relative
   flex: 1
   min-height: 0
@@ -15,26 +16,24 @@ component
   flex-direction: column
   row-gap: 1.25em
   padding: 2em 2.25em 3.5em
-  color: var(--desk-mist)
+  color: var(--mute)
   overflow-y: auto
-  font-family: Figtree, Rubik, sans-serif
+  font-family: Inter, Rubik, sans-serif
   background:
-    radial-gradient(120% 80% at 50% -10%, rgba(210, 242, 107, 0.14), transparent 55%),
-    radial-gradient(70% 50% at 100% 20%, rgba(56, 120, 96, 0.22), transparent 50%),
-    radial-gradient(60% 40% at 0% 80%, rgba(40, 72, 58, 0.35), transparent 45%),
-    linear-gradient(180deg, #121a17 0%, var(--desk-ink) 42%, #0b100e 100%)
+    radial-gradient(90% 60% at 50% -15%, rgba(57, 255, 20, 0.12), transparent 55%),
+    radial-gradient(50% 40% at 100% 0%, rgba(0, 243, 255, 0.08), transparent 50%),
+    linear-gradient(180deg, #161616 0%, var(--obsidian) 45%, #0a0a0a 100%)
 
   a
-    color: var(--desk-accent)
+    color: var(--cyan)
 
-  > .atmosphere
+  > .scanlines
     pointer-events: none
     position: absolute
     inset: 0
-    opacity: 0.35
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")
-    mix-blend-mode: soft-light
-    animation: desk-grain 12s linear infinite
+    opacity: 0.08
+    background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 3px)
+    animation: obsidian-drift 14s linear infinite
 
   > .hero
     position: relative
@@ -43,47 +42,53 @@ component
     flex-direction: column
     align-items: center
     text-align: center
-    padding: 1.25em 1em 0.5em
-    animation: desk-rise 0.7s ease-out both
+    padding: 0.5em 1em 0.25em
+    animation: obsidian-rise 0.65s ease-out both
 
-    > .brand-mark
-      width: 3.5rem
-      height: 3px
-      margin-bottom: 1.1em
-      border-radius: 1px
-      background: var(--desk-accent)
-      transform-origin: center
-      animation: desk-mark 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both
+    > .banner
+      margin-bottom: 1em
+      padding: 0.35em 0.9em
+      border: 1px solid rgba(57, 255, 20, 0.45)
+      border-radius: 4px
+      background: rgba(57, 255, 20, 0.1)
+      color: var(--neon)
+      font-family: "JetBrains Mono", monospace
+      font-size: 11px
+      font-weight: 400
+      letter-spacing: 0.14em
+      text-transform: uppercase
+      animation: obsidian-pulse 2.8s ease-in-out infinite
 
     > h1
       margin: 0
-      color: var(--desk-paper)
-      font-family: Syne, Rubik, sans-serif
-      font-size: clamp(2.4rem, 5vw, 3.6rem)
-      font-weight: 800
-      letter-spacing: -0.03em
-      line-height: 1.05
+      color: var(--ink)
+      font-family: Geist, Inter, sans-serif
+      font-size: clamp(2.6rem, 5.5vw, 3.8rem)
+      font-weight: 700
+      letter-spacing: -0.04em
+      line-height: 1
 
     > .tagline
-      margin: 0.55em 0 0
-      max-width: 22em
-      color: var(--desk-paper)
-      font-size: clamp(1.05rem, 2vw, 1.35rem)
-      font-weight: 500
-      line-height: 1.35
+      margin: 0.45em 0 0
+      color: var(--cyan)
+      font-family: "JetBrains Mono", monospace
+      font-size: 0.95rem
+      letter-spacing: 0.08em
+      text-transform: uppercase
 
     > .support
-      margin: 0.65em 0 1.35em
-      max-width: 28em
-      color: var(--desk-mist)
+      margin: 0.85em 0 1.4em
+      max-width: 30em
+      color: var(--mute)
       font-size: $fs-l
-      line-height: 1.45
+      line-height: 1.5
 
     > .credit
       margin: 1em 0 0
-      color: rgba(154, 173, 162, 0.7)
-      font-size: $fs-s
-      letter-spacing: 0.04em
+      color: rgba(138, 138, 138, 0.75)
+      font-family: "JetBrains Mono", monospace
+      font-size: 10px
+      letter-spacing: 0.08em
       text-transform: uppercase
 
   > .main
@@ -91,11 +96,11 @@ component
     z-index: 1
     flex: 1
     min-height: 12em
-    margin-top: 0.75em
+    margin-top: 0.5em
     display: grid
     grid-template-columns: repeat(5, minmax($col-min, 1fr))
     column-gap: $col-gap
-    animation: desk-rise 0.75s ease-out 0.12s both
+    animation: obsidian-rise 0.7s ease-out 0.1s both
 
     > .panel
       grid-column: span 3
@@ -103,10 +108,10 @@ component
       display: flex
       flex-direction: column
       padding: 1em 1.25em
-      border-radius: 6px
-      border: 1px solid rgba(210, 242, 107, 0.12)
-      background: var(--desk-panel)
-      backdrop-filter: blur(10px)
+      border-radius: 12px
+      border: 1px solid rgba(255, 255, 255, 0.08)
+      background: rgba(26, 26, 26, 0.92)
+      box-shadow: inset 0 0 0 1px rgba(57, 255, 20, 0.04)
 
     > .rail
       grid-column: span 2
@@ -118,34 +123,30 @@ component
       overflow-y: auto
       align-content: start
 
-@keyframes desk-rise
+@keyframes obsidian-rise
   from
     opacity: 0
-    transform: translateY(12px)
+    transform: translateY(10px)
   to
     opacity: 1
     transform: translateY(0)
 
-@keyframes desk-mark
-  from
-    transform: scaleX(0.2)
-    opacity: 0
-  to
-    transform: scaleX(1)
-    opacity: 1
+@keyframes obsidian-pulse
+  0%, 100%
+    box-shadow: 0 0 0 0 rgba(57, 255, 20, 0)
+  50%
+    box-shadow: 0 0 16px 0 rgba(57, 255, 20, 0.18)
 
-@keyframes desk-grain
+@keyframes obsidian-drift
   from
-    transform: translate3d(0, 0, 0)
+    transform: translateY(0)
   to
-    transform: translate3d(-2%, -3%, 0)
+    transform: translateY(-3%)
 
 @media (prefers-reduced-motion: reduce)
   component
-    > .atmosphere
-      animation: none
-
+    > .scanlines,
     > .hero,
     > .main,
-    > .hero > .brand-mark
+    > .hero > .banner
       animation: none
