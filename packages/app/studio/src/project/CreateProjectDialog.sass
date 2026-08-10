@@ -4,30 +4,35 @@ component
   row-gap: 0.5em
   padding: 0.5em 0 0
   min-width: 22em
+  font-family: Figtree, Rubik, sans-serif
 
   > .choice
     display: flex
     flex-direction: column
     align-items: flex-start
-    row-gap: 0.15em
+    row-gap: 0.2em
     width: 100%
-    padding: 0.75em 1em
-    border: 1px solid rgba(white, 0.12)
-    border-radius: 0.5em
-    background: none
+    padding: 0.85em 1em
+    border: 1px solid rgba(210, 242, 107, 0.16)
+    border-radius: 4px
+    background: rgba(18, 28, 24, 0.35)
     color: inherit
     font: inherit
     text-align: left
     cursor: pointer
+    transition: border-color 0.15s ease, background 0.15s ease
 
     &:hover
-      border-color: var(--color-blue)
-      background: rgba(white, 0.03)
+      border-color: #d2f26b
+      background: rgba(210, 242, 107, 0.08)
 
     > .name
-      color: white
-      font-size: 15px
+      color: #e7efe8
+      font-family: Syne, Rubik, sans-serif
+      font-size: 16px
+      font-weight: 700
 
     > .description
-      color: var(--color-dark)
+      color: #9aada2
       font-size: 12px
+      line-height: 1.4

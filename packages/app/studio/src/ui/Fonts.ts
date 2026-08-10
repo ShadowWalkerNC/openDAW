@@ -18,5 +18,29 @@ export const Fonts = {
         "font-weight": "normal",
         "font-style": "normal",
         "src": "/fonts/OpenSans-Regular.ttf"
+    },
+    SyneBold: <FontFaceProperties>{
+        "font-family": "Syne",
+        "font-weight": 700,
+        "font-style": "normal",
+        "src": "/fonts/syne-700.woff2"
+    },
+    SyneExtraBold: <FontFaceProperties>{
+        "font-family": "Syne",
+        "font-weight": 800,
+        "font-style": "normal",
+        "src": "/fonts/syne-800.woff2"
+    },
+    Figtree: <FontFaceProperties>{
+        "font-family": "Figtree",
+        "font-weight": 400,
+        "font-style": "normal",
+        "src": "/fonts/figtree-400.woff2"
+    },
+    FigtreeMedium: <FontFaceProperties>{
+        "font-family": "Figtree",
+        "font-weight": 500,
+        "font-style": "normal",
+        "src": "/fonts/figtree-500.woff2"
     }
 }

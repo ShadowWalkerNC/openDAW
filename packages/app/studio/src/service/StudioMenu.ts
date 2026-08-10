@@ -11,13 +11,14 @@ import {createDebugMenu} from "@/service/DebugMenu"
 import {connectRoom} from "@/service/StudioLiveRoomConnect"
 import {AiDemux} from "@/service/AiDemux.tsx"
 import {NextcloudDialogs} from "@/project/NextcloudDialogs"
+import {ProductBrand} from "@/product/branding"
 
 export const populateStudioMenu = (service: StudioService) => {
     const Global = GlobalShortcuts
     return MenuItem.root()
         .setRuntimeChildrenProcedure(parent => {
                 parent.addMenuItem(
-                    MenuItem.header({label: "openDAW", icon: IconSymbol.OpenDAW, color: Colors.green}),
+                    MenuItem.header({label: ProductBrand.name, icon: IconSymbol.OpenDAW, color: Colors.green}),
                     MenuItem.default({
                         label: "Dashboard",
                         shortcut: Global["workspace-screen-dashboard"].shortcut.format()

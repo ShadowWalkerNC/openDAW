@@ -23,7 +23,7 @@ export namespace ProjectDialogs {
         const {resolve, reject, promise} = Promise.withResolvers<ProjectTemplate>()
         const dialog: HTMLDialogElement = (
             <Dialog headline="What do you want to make?"
-                    icon={IconSymbol.New}
+                    icon={IconSymbol.OpenDAW}
                     cancelable={true}
                     buttons={[{
                         text: "Cancel",

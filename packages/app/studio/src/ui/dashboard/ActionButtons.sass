@@ -3,31 +3,52 @@
 component
   display: flex
   justify-content: center
-  column-gap: 1.5em
+  flex-wrap: wrap
+  column-gap: 0.75em
+  row-gap: 0.75em
 
   > .action
     display: flex
     align-items: center
     column-gap: 0.5em
-    padding: 0.5em 1.75em
-    border-radius: 999px
-    border: 1px solid var(--color-blue)
-    background: none
-    color: var(--color-blue)
+    padding: 0.7em 1.35em
+    border-radius: 4px
+    border: 1px solid rgba(231, 239, 232, 0.22)
+    background: transparent
+    color: #e7efe8
     cursor: pointer
     font: inherit
+    font-family: Figtree, Rubik, sans-serif
     font-size: $fs-l
+    font-weight: 500
     white-space: nowrap
-    box-shadow: 0 0 16px 0 rgba(white, 0.0)
-    transition: box-shadow 0.2s ease-in-out
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease
 
-    &:hover
-      border: 1px solid white
-      background: rgba(white, 0.03)
-      color: white
-      box-shadow: 0 0 16px 0 rgba(white, 0.15)
+    &:first-child
+      border-color: #d2f26b
+      background: #d2f26b
+      color: #121a17
+
+      &:hover
+        background: #e2ff8a
+        border-color: #e2ff8a
+        color: #0f1412
+        transform: translateY(-1px)
+
+    &:not(:first-child):hover
+      border-color: rgba(210, 242, 107, 0.55)
+      background: rgba(210, 242, 107, 0.08)
+      color: #e7efe8
+      transform: translateY(-1px)
 
     > svg
       width: 16px
       height: 16px
       flex: 0 0 auto
+
+@media (prefers-reduced-motion: reduce)
+  component > .action
+    transition: none
+
+    &:hover
+      transform: none

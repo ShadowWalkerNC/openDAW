@@ -1,51 +1,101 @@
 @use "@/colors"
 @use "tokens" as *
 
-
 component
+  --desk-ink: #0f1412
+  --desk-panel: rgba(18, 28, 24, 0.72)
+  --desk-line: rgba(210, 242, 107, 0.55)
+  --desk-accent: #d2f26b
+  --desk-mist: #9aada2
+  --desk-paper: #e7efe8
+  position: relative
   flex: 1
   min-height: 0
   display: flex
   flex-direction: column
-  row-gap: 1em
-  padding: 1.75em 2em 4em 2em
-  color: var(--color-dark)
+  row-gap: 1.25em
+  padding: 2em 2.25em 3.5em
+  color: var(--desk-mist)
   overflow-y: auto
-  @include colors.panel-background
+  font-family: Figtree, Rubik, sans-serif
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(210, 242, 107, 0.14), transparent 55%),
+    radial-gradient(70% 50% at 100% 20%, rgba(56, 120, 96, 0.22), transparent 50%),
+    radial-gradient(60% 40% at 0% 80%, rgba(40, 72, 58, 0.35), transparent 45%),
+    linear-gradient(180deg, #121a17 0%, var(--desk-ink) 42%, #0b100e 100%)
 
   a
-    color: var(--color-blue)
+    color: var(--desk-accent)
+
+  > .atmosphere
+    pointer-events: none
+    position: absolute
+    inset: 0
+    opacity: 0.35
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")
+    mix-blend-mode: soft-light
+    animation: desk-grain 12s linear infinite
 
   > .hero
+    position: relative
+    z-index: 1
     display: flex
     flex-direction: column
     align-items: center
+    text-align: center
+    padding: 1.25em 1em 0.5em
+    animation: desk-rise 0.7s ease-out both
+
+    > .brand-mark
+      width: 3.5rem
+      height: 3px
+      margin-bottom: 1.1em
+      border-radius: 1px
+      background: var(--desk-accent)
+      transform-origin: center
+      animation: desk-mark 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both
 
     > h1
-      color: white
-      font-size: 40px
       margin: 0
+      color: var(--desk-paper)
+      font-family: Syne, Rubik, sans-serif
+      font-size: clamp(2.4rem, 5vw, 3.6rem)
+      font-weight: 800
+      letter-spacing: -0.03em
+      line-height: 1.05
 
     > .tagline
-      font-size: $fs-l
-      color: var(--color-shadow)
+      margin: 0.55em 0 0
+      max-width: 22em
+      color: var(--desk-paper)
+      font-size: clamp(1.05rem, 2vw, 1.35rem)
+      font-weight: 500
+      line-height: 1.35
 
-  // one-pager: the panel and the rail take the rest; only the list inside the panel scrolls
+    > .support
+      margin: 0.65em 0 1.35em
+      max-width: 28em
+      color: var(--desk-mist)
+      font-size: $fs-l
+      line-height: 1.45
+
+    > .credit
+      margin: 1em 0 0
+      color: rgba(154, 173, 162, 0.7)
+      font-size: $fs-s
+      letter-spacing: 0.04em
+      text-transform: uppercase
+
   > .main
+    position: relative
+    z-index: 1
     flex: 1
-    // Floor for BOTH columns, since they share the grid row. Sized for the panel alone (its chrome is ~6.5em:
-    // tabs, search, list header) plus a few rows; the rail no longer dictates it because it scrolls internally
-    // rather than spilling over the tiles. Under this floor the dashboard scrolls as a whole.
-    // Must stay EXPLICIT: as a flex item, an `auto` min-height would resolve to min-content, and the panel
-    // would then be stretched by whatever the list wants to be.
     min-height: 12em
-    margin-top: 1.5em // extra breathing room between the action buttons and the columns below
-    // The shared 5-column grid ($col-gap/$col-min in tokens.sass, used verbatim by the intro tiles below, whose
-    // container is the same width): the panel spans 1-3 and the rail 4-5, so the rail's columns land exactly on
-    // the tiles beneath them (Links over Privacy, Sponsors over Open Source).
+    margin-top: 0.75em
     display: grid
     grid-template-columns: repeat(5, minmax($col-min, 1fr))
     column-gap: $col-gap
+    animation: desk-rise 0.75s ease-out 0.12s both
 
     > .panel
       grid-column: span 3
@@ -53,18 +103,49 @@ component
       display: flex
       flex-direction: column
       padding: 1em 1.25em
-      border-radius: 8px
-      border: 1px solid rgba(white, 0.08)
-      background: rgba(white, 0.01)
+      border-radius: 6px
+      border: 1px solid rgba(210, 242, 107, 0.12)
+      background: var(--desk-panel)
+      backdrop-filter: blur(10px)
 
     > .rail
       grid-column: span 2
-      // subgrid, NOT `1fr 1fr`: the rail's two columns must BE grid columns 4 and 5. With its own track
-      // definition, column 2 is placed by the rail's own gap and drifts off the tile below it.
       display: grid
       grid-template-columns: subgrid
-      row-gap: 1.5em // column-gap comes from the parent grid, so it stays in lockstep
+      row-gap: 1.5em
       min-width: 0
       min-height: 0
       overflow-y: auto
       align-content: start
+
+@keyframes desk-rise
+  from
+    opacity: 0
+    transform: translateY(12px)
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes desk-mark
+  from
+    transform: scaleX(0.2)
+    opacity: 0
+  to
+    transform: scaleX(1)
+    opacity: 1
+
+@keyframes desk-grain
+  from
+    transform: translate3d(0, 0, 0)
+  to
+    transform: translate3d(-2%, -3%, 0)
+
+@media (prefers-reduced-motion: reduce)
+  component
+    > .atmosphere
+      animation: none
+
+    > .hero,
+    > .main,
+    > .hero > .brand-mark
+      animation: none

@@ -18,37 +18,32 @@ type Tile = {
 const tiles: ReadonlyArray<Tile> = [
     {
         icon: IconSymbol.Timeline,
-        title: "Your Studio",
-        text: "Instruments, effects, a mixer, MIDI and audio recording, all in one place. Arrange, produce and "
-            + "mix complete tracks.",
+        title: "Guided starts",
+        text: "Begin with Podcast, Vocal Demo, Beat, or Voiceover. Sensible tracks, plain names, ready to record.",
         path: "/manuals/introduction"
     },
     {
         icon: IconSymbol.Connected,
-        title: "Live Rooms",
-        text: "Open a room, share the link, and make music together in real time. Everyone edits the same "
-            + "session at once.",
+        title: "Live rooms",
+        text: "Share a link and edit the same session together. Useful for feedback, lessons, and quick collabs.",
         path: "/manuals/live-rooms"
     },
     {
         icon: IconSymbol.Book,
-        title: "Education",
-        text: "Made for learning music production, from your first beat to a finished track. Classroom-friendly "
-            + "and free to use.",
+        title: "Learn by doing",
+        text: "Built for creators who want results first. No account wall between you and your first export.",
         path: "/manuals/education"
     },
     {
         icon: IconSymbol.Lock,
-        title: "Privacy",
-        text: "No account, no subscription, no tracking. Your projects stay on your device and are never "
-            + "uploaded to our servers.",
+        title: "Private by default",
+        text: "Projects stay on your device. No signup, no tracking, no cloud upload unless you choose backup.",
         path: "/privacy"
     },
     {
         icon: IconSymbol.Code,
-        title: "Open Source",
-        text: "openDAW is open source. Inspect it, fork it, self-host it, or build your own devices and "
-            + "extensions on top.",
+        title: "Open foundation",
+        text: "Creator Desk is built on openDAW. Inspect the source, self-host, or extend with your own devices.",
         path: "/manuals/open-source"
     }
 ]

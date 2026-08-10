@@ -18,15 +18,15 @@ export const ActionButtons = ({service}: Construct) => (
     <div className={className}>
         <button className="action" title="Start with a blank project or a guided template."
                 onclick={() => service.newProject()}>
-            <Icon symbol={IconSymbol.New}/><span>New Project</span>
+            <Icon symbol={IconSymbol.New}/><span>Start creating</span>
         </button>
         <button className="action" title="Jam with others in real time, share a link."
                 onclick={() => connectRoom(service)}>
-            <Icon symbol={IconSymbol.Connected}/><span>New Live Room</span>
+            <Icon symbol={IconSymbol.Connected}/><span>Live room</span>
         </button>
         <button className="action" title="Load a project bundle (.odb) from disk."
                 onclick={() => service.importBundle()}>
-            <Icon symbol={IconSymbol.Folder}/><span>Open Bundle</span>
+            <Icon symbol={IconSymbol.Folder}/><span>Open file</span>
         </button>
     </div>
 )
