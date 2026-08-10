@@ -69,6 +69,11 @@ import {
     WasmBpmDetector
 } from "@opendaw/studio-core"
 import {ProjectDialogs} from "@/project/ProjectDialogs"
+import {
+    createProjectFromTemplate,
+    projectMetaNameForTemplate,
+    ProjectTemplate
+} from "@/project/ProjectTemplates"
 import {PresetService} from "@/ui/browse/PresetService"
 import {AudioFileBox, AudioUnitBox} from "@opendaw/studio-boxes"
 import {AudioUnitType} from "@opendaw/studio-enums"
@@ -225,8 +230,21 @@ export class StudioService implements ProjectEnv {
 
     async newProject() {
         if (!await this.#projectProfileService.approveLosingChanges()) {return}
+        const {status, value} = await Promises.tryCatch(ProjectDialogs.showCreateProjectDialog())
+        if (status === "rejected") {return}
+        this.#setProjectFromTemplate(value)
+    }
+
+    async newBlankProject() {
+        if (!await this.#projectProfileService.approveLosingChanges()) {return}
         this.#projectProfileService.setValue(Option.wrap(
             new ProjectProfile(UUID.generate(), Project.new(this), ProjectMeta.init("Untitled"), Option.None)))
+    }
+
+    #setProjectFromTemplate(template: ProjectTemplate): void {
+        const project = createProjectFromTemplate(this, template)
+        this.#projectProfileService.setValue(Option.wrap(
+            new ProjectProfile(UUID.generate(), project, ProjectMeta.init(projectMetaNameForTemplate(template)), Option.None)))
     }
 
     async closeProject() {return this.#navigation.closeProject()}

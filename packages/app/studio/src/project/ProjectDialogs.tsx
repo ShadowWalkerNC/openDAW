@@ -1,9 +1,11 @@
+import css from "./CreateProjectDialog.sass?inline"
 import {Dialog} from "@/ui/components/Dialog"
 import {ExportConfiguration, ExportStemConfiguration} from "@opendaw/studio-adapters"
 import {IconSymbol} from "@opendaw/studio-enums"
 import {Surface} from "@/ui/surface/Surface"
 import {createElement} from "@opendaw/lib-jsx"
 import {Errors, isDefined, Objects, Terminator, UUID} from "@opendaw/lib-std"
+import {Html} from "@opendaw/lib-dom"
 import {StudioService} from "@/service/StudioService"
 import {ProjectBrowser} from "@/project/ProjectBrowser"
 import {
@@ -12,8 +14,43 @@ import {
     ExportStemsConfigurator
 } from "@/service/ExportStemsConfigurator"
 import {Project, ProjectMeta} from "@opendaw/studio-core"
+import {ProjectTemplate, ProjectTemplates} from "@/project/ProjectTemplateCatalog"
+
+const createProjectDialogClass = Html.adoptStyleSheet(css, "CreateProjectDialog")
 
 export namespace ProjectDialogs {
+    export const showCreateProjectDialog = async (): Promise<ProjectTemplate> => {
+        const {resolve, reject, promise} = Promise.withResolvers<ProjectTemplate>()
+        const dialog: HTMLDialogElement = (
+            <Dialog headline="What do you want to make?"
+                    icon={IconSymbol.New}
+                    cancelable={true}
+                    buttons={[{
+                        text: "Cancel",
+                        onClick: handler => {
+                            handler.close()
+                            reject(Errors.AbortError)
+                        }
+                    }]}>
+                <div className={createProjectDialogClass}>
+                    {ProjectTemplates.map(template => (
+                        <button className="choice" type="button" onclick={() => {
+                            resolve(template)
+                            dialog.close()
+                        }}>
+                            <span className="name">{template.name}</span>
+                            <span className="description">{template.description}</span>
+                        </button>
+                    ))}
+                </div>
+            </Dialog>
+        )
+        dialog.oncancel = () => reject(Errors.AbortError)
+        Surface.get().flyout.appendChild(dialog)
+        dialog.showModal()
+        return promise
+    }
+
     export const showSaveDialog = async ({headline, meta}: {
         headline: string,
         meta?: ProjectMeta

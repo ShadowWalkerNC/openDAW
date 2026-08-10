@@ -16,7 +16,7 @@ type Construct = {
 
 export const ActionButtons = ({service}: Construct) => (
     <div className={className}>
-        <button className="action" title="Empty timeline, start from a clean slate."
+        <button className="action" title="Start with a blank project or a guided template."
                 onclick={() => service.newProject()}>
             <Icon symbol={IconSymbol.New}/><span>New Project</span>
         </button>
