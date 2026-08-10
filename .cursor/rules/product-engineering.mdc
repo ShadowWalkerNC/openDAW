@@ -1,0 +1,35 @@
+---
+description: Product and engineering rules for this openDAW fork/customization
+alwaysApply: true
+---
+
+# Product and engineering rules
+
+This project is a fork/customization of openDAW.
+
+## Product goal
+Build an outcome-driven audio workspace for non-technical creators.
+Prioritize guided workflows, project organization, clear language, safe defaults,
+and exportable results over professional-audio complexity.
+
+## Non-negotiable constraints
+- Preserve license notices and do not remove, obscure, or change upstream licensing.
+- Do not make unrelated refactors.
+- Make the smallest useful change for each request.
+- Do not change real-time audio scheduling, audio graph behavior, file decoding,
+  persistence formats, or export code unless explicitly asked.
+- Preserve backward compatibility for existing saved projects whenever possible.
+- Never delete user audio or project data without explicit confirmation.
+- Use TypeScript with strict types; avoid `any`.
+- Reuse existing patterns, components, state, and styling before adding dependencies.
+- Run the relevant typecheck, lint, and tests after edits; report commands and results.
+
+## Agent workflow
+1. Before editing, identify relevant files and explain the intended change.
+2. For changes spanning more than 3 files or touching the audio engine, create a plan first.
+3. List assumptions and ask one concise question if a product decision is genuinely unclear.
+4. After implementation, give:
+   - files changed
+   - user-visible behavior
+   - tests/commands run
+   - known limitations or follow-up work
