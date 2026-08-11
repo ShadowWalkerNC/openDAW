@@ -22,7 +22,7 @@ import {TrackType} from "../timeline/TrackType"
 
 export namespace InstrumentFactories {
     export const Tape: InstrumentFactory<void, TapeDeviceBox> = {
-        defaultName: "Tape",
+        defaultName: "Audio",
         defaultIcon: IconSymbol.Tape,
         briefDescription: "Audio Player",
         description: "Plays audio regions & clips",

@@ -1,4 +1,4 @@
-import {assert, DefaultObservableValue, Errors, Option, panic, RuntimeNotifier} from "@opendaw/lib-std"
+import {assert, DefaultObservableValue, Errors, isDefined, Option, panic, RuntimeNotifier} from "@opendaw/lib-std"
 import {AudioData, WavFile} from "@opendaw/lib-dsp"
 import {
     ExternalLib,
@@ -13,30 +13,16 @@ import {Promises} from "@opendaw/lib-runtime"
 import {ExportConfiguration} from "@opendaw/studio-adapters"
 import {Dialogs} from "@/ui/components/dialogs"
 
+export type ExportOutcome = "podcast" | "social"
+
 export namespace Mixdowns {
     export const exportMixdown = async ({project: source, meta}: ProjectProfile): Promise<void> => {
-        const project = source.copy()
-        const abortController = new AbortController()
-        const progress = new DefaultObservableValue(0.0)
-        const dialog = RuntimeNotifier.progress({
-            headline: "Rendering mixdown...",
-            progress,
-            cancel: () => abortController.abort()
-        })
-        const result = await Promises.tryCatch(OfflineEngineRenderer
-            .start(project, Option.None, progress, abortController.signal, 48_000))
-        dialog.terminate()
-        if (result.status === "rejected") {
-            if (!Errors.isAbort(result.error)) {
-                throw result.error
-            }
-            return
-        }
-        const audioData: AudioData = result.value
+        const audioData = await renderMixdown(source)
+        if (!isDefined(audioData)) {return}
         const {resolve, reject, promise} = Promise.withResolvers<void>()
         const {status, error} = await Promises.tryCatch(Dialogs.show({
-            headline: "Encode Mixdown",
-            content: "openDAW will download FFmpeg (30MB) once to encode your mixdown unless you choose 'Wav'.",
+            headline: "Encode Export",
+            content: "Creator Desk will download FFmpeg (30MB) once to encode your export unless you choose 'Wav'.",
             excludeOk: true,
             buttons: [
                 {
@@ -64,13 +50,42 @@ export namespace Mixdowns {
         return promise
     }
 
+    export const exportOutcome = async ({project: source, meta}: ProjectProfile,
+                                        outcome: ExportOutcome): Promise<void> => {
+        const audioData = await renderMixdown(source)
+        if (!isDefined(audioData)) {return}
+        const suffix = outcome === "podcast" ? "podcast" : "social"
+        const fileMeta = ProjectMeta.copy(meta)
+        fileMeta.name = `${meta.name}-${suffix}`
+        await saveMp3File(audioData, fileMeta)
+    }
+
+    const renderMixdown = async (source: ProjectProfile["project"]): Promise<AudioData | undefined> => {
+        const project = source.copy()
+        const abortController = new AbortController()
+        const progress = new DefaultObservableValue(0.0)
+        const dialog = RuntimeNotifier.progress({
+            headline: "Rendering export...",
+            progress,
+            cancel: () => abortController.abort()
+        })
+        const result = await Promises.tryCatch(OfflineEngineRenderer
+            .start(project, Option.None, progress, abortController.signal, 48_000))
+        dialog.terminate()
+        if (result.status === "rejected") {
+            if (!Errors.isAbort(result.error)) {throw result.error}
+            return undefined
+        }
+        return result.value
+    }
+
     export const exportStems = async ({project: source, meta}: ProjectProfile,
                                       config: ExportConfiguration): Promise<void> => {
         const project = source.copy()
         const abortController = new AbortController()
         const progress = new DefaultObservableValue(0.0)
         const dialog = RuntimeNotifier.progress({
-            headline: "Rendering mixdown...",
+            headline: "Rendering stems...",
             progress,
             cancel: () => abortController.abort()
         })

@@ -43,7 +43,7 @@ const tiles: ReadonlyArray<Tile> = [
     {
         icon: IconSymbol.Code,
         title: "Open foundation",
-        text: "Obsidian is built on openDAW. Inspect the source, self-host, or extend with your own devices.",
+        text: "Creator Desk is built on openDAW. Inspect the source, self-host, or extend with your own devices.",
         path: "/manuals/open-source"
     }
 ]

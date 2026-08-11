@@ -74,6 +74,7 @@ import {
     projectMetaNameForTemplate,
     ProjectTemplate
 } from "@/project/ProjectTemplates"
+import {templateTagForId} from "@/project/ProjectTemplateHints"
 import {PresetService} from "@/ui/browse/PresetService"
 import {AudioFileBox, AudioUnitBox} from "@opendaw/studio-boxes"
 import {AudioUnitType} from "@opendaw/studio-enums"
@@ -243,8 +244,10 @@ export class StudioService implements ProjectEnv {
 
     #setProjectFromTemplate(template: ProjectTemplate): void {
         const project = createProjectFromTemplate(this, template)
+        const meta = ProjectMeta.init(projectMetaNameForTemplate(template))
+        meta.tags = [templateTagForId(template.id)]
         this.#projectProfileService.setValue(Option.wrap(
-            new ProjectProfile(UUID.generate(), project, ProjectMeta.init(projectMetaNameForTemplate(template)), Option.None)))
+            new ProjectProfile(UUID.generate(), project, meta, Option.None)))
     }
 
     async closeProject() {return this.#navigation.closeProject()}
@@ -281,6 +284,22 @@ export class StudioService implements ProjectEnv {
             .ifSome(async (profile) => {
                 await this.audioContext.suspend()
                 const {status, error} = await Promises.tryCatch(Mixdowns.exportMixdown(profile))
+                if (status === "rejected" && !Errors.isAbort(error)) {
+                    console.warn(error)
+                    RuntimeNotifier.notify({message: "Export failed.", icon: "Warning"})
+                }
+                this.audioContext.resume().then()
+            })
+    }
+
+    async exportForPodcast() {return this.#exportOutcome("podcast")}
+    async exportForSocial() {return this.#exportOutcome("social")}
+
+    async #exportOutcome(outcome: "podcast" | "social") {
+        return this.#projectProfileService.getValue()
+            .ifSome(async (profile) => {
+                await this.audioContext.suspend()
+                const {status, error} = await Promises.tryCatch(Mixdowns.exportOutcome(profile, outcome))
                 if (status === "rejected" && !Errors.isAbort(error)) {
                     console.warn(error)
                     RuntimeNotifier.notify({message: "Export failed.", icon: "Warning"})

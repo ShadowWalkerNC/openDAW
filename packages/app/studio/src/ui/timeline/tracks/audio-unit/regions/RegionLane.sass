@@ -31,3 +31,20 @@ component
     height: 100%
     font-size: 0.625em
     position: absolute
+
+  > .empty-hint
+    display: none
+    position: absolute
+    inset: 0
+    align-items: center
+    padding: 0 1em
+    pointer-events: none
+    color: var(--color-shadow)
+    font-size: 12px
+    letter-spacing: 0.01em
+
+    &.guided
+      color: var(--color-green)
+
+  &.is-empty > .empty-hint
+    display: flex

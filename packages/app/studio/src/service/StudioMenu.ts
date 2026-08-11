@@ -64,8 +64,12 @@ export const populateStudioMenu = (service: StudioService) => {
                         )),
                     MenuItem.default({label: "Export", selectable: service.hasProfile})
                         .setRuntimeChildrenProcedure(parent => parent.addMenuItem(
-                            MenuItem.default({label: "Mixdown...", selectable: service.hasProfile})
+                            MenuItem.default({label: "Export audio...", selectable: service.hasProfile})
                                 .setTriggerProcedure(() => service.exportMixdown()),
+                            MenuItem.default({label: "Export for podcast...", selectable: service.hasProfile})
+                                .setTriggerProcedure(() => service.exportForPodcast()),
+                            MenuItem.default({label: "Export for social...", selectable: service.hasProfile})
+                                .setTriggerProcedure(() => service.exportForSocial()),
                             MenuItem.default({label: "Stems...", selectable: service.hasProfile})
                                 .setTriggerProcedure(() => service.exportStems()),
                             MenuItem.default({label: "Project Bundle...", selectable: service.hasProfile})
