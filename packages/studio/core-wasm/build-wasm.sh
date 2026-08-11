@@ -11,7 +11,23 @@
 #                       of distinct devices coexist in the one memory with no fixed --global-base.
 #                       Same memory import as the engine.
 set -e
-. "$HOME/.cargo/env"
+# Prefer a user rustup install; fall back to the common system-wide layout used in containers.
+if [ -f "$HOME/.cargo/env" ]; then
+  # shellcheck disable=SC1091
+  . "$HOME/.cargo/env"
+elif [ -d /usr/local/cargo ] && [ -d /usr/local/rustup ]; then
+  export CARGO_HOME="${CARGO_HOME:-/usr/local/cargo}"
+  export RUSTUP_HOME="${RUSTUP_HOME:-/usr/local/rustup}"
+  if [ -f /usr/local/cargo/env ]; then
+    # shellcheck disable=SC1091
+    . /usr/local/cargo/env
+  fi
+fi
+export PATH="${CARGO_HOME:-$HOME/.cargo}/bin:/usr/local/cargo/bin:$PATH"
+if ! command -v cargo >/dev/null 2>&1; then
+  echo "Error: cargo not found. Install Rust (https://rustup.rs) and retry." >&2
+  exit 1
+fi
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 cd "$ROOT/crates"
 TARGET=wasm32-unknown-unknown
