@@ -10,6 +10,7 @@ import {Backup} from "@/ui/dashboard/Backup"
 import {Sponsors} from "@/ui/dashboard/Sponsors"
 import {HelpFeedback} from "@/ui/dashboard/HelpFeedback"
 import {Links} from "@/ui/dashboard/Links"
+import {ProductBrand} from "@/product/branding"
 
 const className = Html.adoptStyleSheet(css, "Dashboard")
 
@@ -18,24 +19,31 @@ type Construct = {
     service: StudioService
 }
 
-export const Dashboard = ({lifecycle, service}: Construct) => (
-    <div className={className}>
-        <header className="hero">
-            <h1>openDAW</h1>
-            <div className="tagline">Create Music Online</div>
-        </header>
-        <ActionButtons lifecycle={lifecycle} service={service}/>
-        <div className="main">
-            <div className="panel">
-                <Resources lifecycle={lifecycle} service={service}/>
+export const Dashboard = ({lifecycle, service}: Construct) => {
+    document.title = ProductBrand.documentTitle
+    return (
+        <div className={className}>
+            <div className="scanlines" aria-hidden="true"/>
+            <header className="hero">
+                <div className="banner">{ProductBrand.banner}</div>
+                <h1>{ProductBrand.name}</h1>
+                <p className="tagline">{ProductBrand.tagline}</p>
+                <p className="support">{ProductBrand.support}</p>
+                <ActionButtons lifecycle={lifecycle} service={service}/>
+                <p className="credit">{ProductBrand.credit}</p>
+            </header>
+            <div className="main">
+                <div className="panel">
+                    <Resources lifecycle={lifecycle} service={service}/>
+                </div>
+                <div className="rail">
+                    <HelpFeedback/>
+                    <Backup service={service}/>
+                    <Links/>
+                    <Sponsors/>
+                </div>
             </div>
-            <div className="rail">
-                <HelpFeedback/>
-                <Backup service={service}/>
-                <Links/>
-                <Sponsors/>
-            </div>
+            <IntroTiles/>
         </div>
-        <IntroTiles/>
-    </div>
-)
+    )
+}

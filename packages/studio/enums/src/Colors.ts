@@ -1,23 +1,24 @@
 import {Color} from "@opendaw/lib-std"
 
+// Obsidian Sonic Lab (Stitch): neon green + cyan on charcoal
 export const Colors = {
     white: new Color(0, 0, 100),
-    blue: new Color(189, 100, 65),
-    green: new Color(150, 77, 69),
+    blue: new Color(183, 100, 50),
+    green: new Color(111, 100, 54),
     yellow: new Color(60, 100, 84),
-    cream: new Color(65, 20, 83),
-    orange: new Color(31, 100, 73),
+    cream: new Color(45, 12, 88),
+    orange: new Color(32, 100, 50),
     red: new Color(354, 100, 65),
-    purple: new Color(314, 100, 78),
-    bright: new Color(197, 5, 95),
-    gray: new Color(197, 31, 88),
-    dark: new Color(197, 15, 70),
-    shadow: new Color(197, 10, 55),
-    black: new Color(197, 10, 25),
-    background: new Color(197, 8, 9),
-    panelBackground: new Color(197, 14, 12),
-    panelBackgroundBright: new Color(197, 13, 19),
-    panelBackgroundDark: new Color(197, 14, 11)
+    purple: new Color(280, 40, 70),
+    bright: new Color(0, 0, 96),
+    gray: new Color(0, 0, 78),
+    dark: new Color(0, 0, 58),
+    shadow: new Color(0, 0, 42),
+    black: new Color(0, 0, 18),
+    background: new Color(0, 0, 7),
+    panelBackground: new Color(0, 0, 10),
+    panelBackgroundBright: new Color(0, 0, 14),
+    panelBackgroundDark: new Color(0, 0, 6)
 }
 
 export const initializeColors = (root: { style: { setProperty: (name: string, value: string) => void } }) => {

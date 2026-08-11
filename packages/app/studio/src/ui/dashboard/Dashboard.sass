@@ -1,51 +1,106 @@
 @use "@/colors"
 @use "tokens" as *
 
-
 component
+  --obsidian: #121212
+  --obsidian-panel: #1a1a1a
+  --neon: #39ff14
+  --cyan: #00f3ff
+  --amber: #ff8a00
+  --ink: #f5f5f5
+  --mute: #8a8a8a
+  position: relative
   flex: 1
   min-height: 0
   display: flex
   flex-direction: column
-  row-gap: 1em
-  padding: 1.75em 2em 4em 2em
-  color: var(--color-dark)
+  row-gap: 1.25em
+  padding: 2em 2.25em 3.5em
+  color: var(--mute)
   overflow-y: auto
-  @include colors.panel-background
+  font-family: Inter, Rubik, sans-serif
+  background:
+    radial-gradient(90% 60% at 50% -15%, rgba(57, 255, 20, 0.12), transparent 55%),
+    radial-gradient(50% 40% at 100% 0%, rgba(0, 243, 255, 0.08), transparent 50%),
+    linear-gradient(180deg, #161616 0%, var(--obsidian) 45%, #0a0a0a 100%)
 
   a
-    color: var(--color-blue)
+    color: var(--cyan)
+
+  > .scanlines
+    pointer-events: none
+    position: absolute
+    inset: 0
+    opacity: 0.08
+    background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 0 1px, transparent 1px 3px)
+    animation: obsidian-drift 14s linear infinite
 
   > .hero
+    position: relative
+    z-index: 1
     display: flex
     flex-direction: column
     align-items: center
+    text-align: center
+    padding: 0.5em 1em 0.25em
+    animation: obsidian-rise 0.65s ease-out both
+
+    > .banner
+      margin-bottom: 1em
+      padding: 0.35em 0.9em
+      border: 1px solid rgba(57, 255, 20, 0.45)
+      border-radius: 4px
+      background: rgba(57, 255, 20, 0.1)
+      color: var(--neon)
+      font-family: "JetBrains Mono", monospace
+      font-size: 11px
+      font-weight: 400
+      letter-spacing: 0.14em
+      text-transform: uppercase
+      animation: obsidian-pulse 2.8s ease-in-out infinite
 
     > h1
-      color: white
-      font-size: 40px
       margin: 0
+      color: var(--ink)
+      font-family: Geist, Inter, sans-serif
+      font-size: clamp(2.6rem, 5.5vw, 3.8rem)
+      font-weight: 700
+      letter-spacing: -0.04em
+      line-height: 1
 
     > .tagline
-      font-size: $fs-l
-      color: var(--color-shadow)
+      margin: 0.45em 0 0
+      color: var(--cyan)
+      font-family: "JetBrains Mono", monospace
+      font-size: 0.95rem
+      letter-spacing: 0.08em
+      text-transform: uppercase
 
-  // one-pager: the panel and the rail take the rest; only the list inside the panel scrolls
+    > .support
+      margin: 0.85em 0 1.4em
+      max-width: 30em
+      color: var(--mute)
+      font-size: $fs-l
+      line-height: 1.5
+
+    > .credit
+      margin: 1em 0 0
+      color: rgba(138, 138, 138, 0.75)
+      font-family: "JetBrains Mono", monospace
+      font-size: 10px
+      letter-spacing: 0.08em
+      text-transform: uppercase
+
   > .main
+    position: relative
+    z-index: 1
     flex: 1
-    // Floor for BOTH columns, since they share the grid row. Sized for the panel alone (its chrome is ~6.5em:
-    // tabs, search, list header) plus a few rows; the rail no longer dictates it because it scrolls internally
-    // rather than spilling over the tiles. Under this floor the dashboard scrolls as a whole.
-    // Must stay EXPLICIT: as a flex item, an `auto` min-height would resolve to min-content, and the panel
-    // would then be stretched by whatever the list wants to be.
     min-height: 12em
-    margin-top: 1.5em // extra breathing room between the action buttons and the columns below
-    // The shared 5-column grid ($col-gap/$col-min in tokens.sass, used verbatim by the intro tiles below, whose
-    // container is the same width): the panel spans 1-3 and the rail 4-5, so the rail's columns land exactly on
-    // the tiles beneath them (Links over Privacy, Sponsors over Open Source).
+    margin-top: 0.5em
     display: grid
     grid-template-columns: repeat(5, minmax($col-min, 1fr))
     column-gap: $col-gap
+    animation: obsidian-rise 0.7s ease-out 0.1s both
 
     > .panel
       grid-column: span 3
@@ -53,18 +108,45 @@ component
       display: flex
       flex-direction: column
       padding: 1em 1.25em
-      border-radius: 8px
-      border: 1px solid rgba(white, 0.08)
-      background: rgba(white, 0.01)
+      border-radius: 12px
+      border: 1px solid rgba(255, 255, 255, 0.08)
+      background: rgba(26, 26, 26, 0.92)
+      box-shadow: inset 0 0 0 1px rgba(57, 255, 20, 0.04)
 
     > .rail
       grid-column: span 2
-      // subgrid, NOT `1fr 1fr`: the rail's two columns must BE grid columns 4 and 5. With its own track
-      // definition, column 2 is placed by the rail's own gap and drifts off the tile below it.
       display: grid
       grid-template-columns: subgrid
-      row-gap: 1.5em // column-gap comes from the parent grid, so it stays in lockstep
+      row-gap: 1.5em
       min-width: 0
       min-height: 0
       overflow-y: auto
       align-content: start
+
+@keyframes obsidian-rise
+  from
+    opacity: 0
+    transform: translateY(10px)
+  to
+    opacity: 1
+    transform: translateY(0)
+
+@keyframes obsidian-pulse
+  0%, 100%
+    box-shadow: 0 0 0 0 rgba(57, 255, 20, 0)
+  50%
+    box-shadow: 0 0 16px 0 rgba(57, 255, 20, 0.18)
+
+@keyframes obsidian-drift
+  from
+    transform: translateY(0)
+  to
+    transform: translateY(-3%)
+
+@media (prefers-reduced-motion: reduce)
+  component
+    > .scanlines,
+    > .hero,
+    > .main,
+    > .hero > .banner
+      animation: none
