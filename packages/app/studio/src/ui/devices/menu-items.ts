@@ -229,7 +229,7 @@ export namespace MenuItems {
                                 effectKind, deviceKey, effectBox).catch(console.warn)))
                     }
                     if (isDefined(instrumentTarget)) {
-                        submenu.addMenuItem(MenuItem.default({label: "Save Entire Audio-Unit Chain"})
+                        submenu.addMenuItem(MenuItem.default({label: "Save Entire Track Chain"})
                             .setTriggerProcedure(() => presets.saveAsRackPreset(instrumentTarget.uuid, [])
                                 .catch(console.warn)))
                     }

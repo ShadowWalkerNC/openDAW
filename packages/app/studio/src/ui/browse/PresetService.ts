@@ -802,7 +802,7 @@ export class PresetService {
             }
             const editing = this.project.userEditingManager.audioUnit.get()
             if (editing.isEmpty()) {
-                RuntimeNotifier.notify({message: "Please select an audio unit first.", icon: "Info"})
+                RuntimeNotifier.notify({message: "Please select a track first.", icon: "Info"})
                 return
             }
             const host = this.project.boxAdapters.adapterFor(editing.unwrap().box, Devices.isHost)

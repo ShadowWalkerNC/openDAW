@@ -11,13 +11,14 @@ import {createDebugMenu} from "@/service/DebugMenu"
 import {connectRoom} from "@/service/StudioLiveRoomConnect"
 import {AiDemux} from "@/service/AiDemux.tsx"
 import {NextcloudDialogs} from "@/project/NextcloudDialogs"
+import {ProductBrand} from "@/product/branding"
 
 export const populateStudioMenu = (service: StudioService) => {
     const Global = GlobalShortcuts
     return MenuItem.root()
         .setRuntimeChildrenProcedure(parent => {
                 parent.addMenuItem(
-                    MenuItem.header({label: "openDAW", icon: IconSymbol.OpenDAW, color: Colors.green}),
+                    MenuItem.header({label: ProductBrand.name, icon: IconSymbol.OpenDAW, color: Colors.green}),
                     MenuItem.default({
                         label: "Dashboard",
                         shortcut: Global["workspace-screen-dashboard"].shortcut.format()
@@ -63,8 +64,12 @@ export const populateStudioMenu = (service: StudioService) => {
                         )),
                     MenuItem.default({label: "Export", selectable: service.hasProfile})
                         .setRuntimeChildrenProcedure(parent => parent.addMenuItem(
-                            MenuItem.default({label: "Mixdown...", selectable: service.hasProfile})
+                            MenuItem.default({label: "Export audio...", selectable: service.hasProfile})
                                 .setTriggerProcedure(() => service.exportMixdown()),
+                            MenuItem.default({label: "Export for podcast...", selectable: service.hasProfile})
+                                .setTriggerProcedure(() => service.exportForPodcast()),
+                            MenuItem.default({label: "Export for social...", selectable: service.hasProfile})
+                                .setTriggerProcedure(() => service.exportForSocial()),
                             MenuItem.default({label: "Stems...", selectable: service.hasProfile})
                                 .setTriggerProcedure(() => service.exportStems()),
                             MenuItem.default({label: "Project Bundle...", selectable: service.hasProfile})

@@ -160,11 +160,11 @@ export const ChannelStrip = ({lifecycle, service, adapter, compact}: Construct) 
                 const isFrozen = project.audioUnitFreeze.isFrozen(adapter)
                 collector.addItems(
                     MenuItem.default({
-                        label: "Freeze AudioUnit",
+                        label: "Freeze Track",
                         hidden: isFrozen
                     }).setTriggerProcedure(() => project.audioUnitFreeze.freeze(adapter)),
                     MenuItem.default({
-                        label: "Unfreeze AudioUnit",
+                        label: "Unfreeze Track",
                         hidden: !isFrozen
                     }).setTriggerProcedure(() => project.audioUnitFreeze.unfreeze(adapter)))
             }

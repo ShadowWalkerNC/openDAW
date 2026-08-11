@@ -68,7 +68,7 @@ export const installTrackHeaderMenu = (service: StudioService,
                 }
             })),
         MenuItem.default({
-            label: "Duplicate AudioUnit",
+            label: "Duplicate Track",
             shortcut: GlobalShortcuts["copy-device"].shortcut.format(),
             separatorBefore: true,
             hidden: audioUnitBoxAdapter.isOutput
@@ -80,15 +80,15 @@ export const installTrackHeaderMenu = (service: StudioService,
             Option.wrap(copies.at(0)).ifSome(copy => userEditingManager.audioUnit.edit(copy.editing))
         }),
         MenuItem.default({
-            label: "Freeze AudioUnit",
+            label: "Freeze Track",
             hidden: !audioUnitBoxAdapter.isInstrument || isFrozen
         }).setTriggerProcedure(() => project.audioUnitFreeze.freeze(audioUnitBoxAdapter)),
         MenuItem.default({
-            label: "Unfreeze AudioUnit",
+            label: "Unfreeze Track",
             hidden: !audioUnitBoxAdapter.isInstrument || !isFrozen
         }).setTriggerProcedure(() => project.audioUnitFreeze.unfreeze(audioUnitBoxAdapter)),
         MenuItem.default({
-            label: "Extract AudioUnit Into New Project",
+            label: "Extract Track Into New Project",
             hidden: audioUnitBoxAdapter.isOutput
         }).setTriggerProcedure(async () => {
             if (!await service.projectProfileService.approveLosingChanges()) {return}

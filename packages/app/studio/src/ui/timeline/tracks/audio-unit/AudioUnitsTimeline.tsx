@@ -22,6 +22,7 @@ import {IndexedBox} from "@opendaw/lib-box"
 import {DragAndDrop} from "@/ui/DragAndDrop"
 import {AnyDragData} from "@/ui/AnyDragData"
 import {installAutoScroll} from "@/ui/AutoScroll"
+import {projectEmptyTimelineHint} from "@/project/ProjectTemplateHints"
 
 const className = Html.adoptStyleSheet(css, "AudioUnitsTimeline")
 
@@ -34,6 +35,15 @@ export const AudioUnitsTimeline = ({lifecycle, service}: Construct) => {
     const {range} = service.timeline
     const {editing, boxGraph, rootBoxAdapter, userEditingManager, boxAdapters} = service.project
     const scrollModel = new ScrollModel()
+    const dropHint: HTMLElement = (
+        <div className="region-area help-section">Drop instruments or samples here</div>
+    )
+    lifecycle.own(service.projectProfileService.catchupAndSubscribe(option => {
+        dropHint.textContent = option.match({
+            none: () => "Drop instruments or samples here",
+            some: profile => projectEmptyTimelineHint(profile.meta.tags)
+        })
+    }))
     const scrollContainer: HTMLElement = (
         <div className="scrollable">
             <div className="fill"/>
@@ -53,7 +63,7 @@ export const AudioUnitsTimeline = ({lifecycle, service}: Construct) => {
                         <span>Add instrument</span> <Icon symbol={IconSymbol.Add}/>
                     </MenuButton>
                 </div>
-                <div className="region-area help-section">Drop instruments or samples here</div>
+                {dropHint}
             </div>
         </div>
     )

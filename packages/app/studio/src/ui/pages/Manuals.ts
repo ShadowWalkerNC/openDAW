@@ -30,7 +30,7 @@ export const Manuals: ReadonlyArray<Manual> = [
             {type: "page", label: "Connect MIDI Device", path: "/manuals/connect-midi-device"},
             {type: "page", label: "Education", path: "/manuals/education"},
             {type: "page", label: "Firefox MIDI", path: "/manuals/firefox-midi"},
-            {type: "page", label: "Freeze AudioUnit", path: "/manuals/freeze-audiounit"},
+            {type: "page", label: "Freeze Track", path: "/manuals/freeze-audiounit"},
             {type: "page", label: "Keyboard Shortcuts", path: "/manuals/keyboard-shortcuts"},
             {type: "page", label: "Latency", path: "/manuals/latency"},
             {type: "page", label: "Live Rooms", path: "/manuals/live-rooms"},
@@ -211,7 +211,7 @@ export const Manuals: ReadonlyArray<Manual> = [
                     },
                     {
                         type: "page",
-                        label: "Tape",
+                        label: "Audio",
                         path: "/manuals/devices/instruments/tape",
                         icon: InstrumentFactories.Tape.defaultIcon
                     },

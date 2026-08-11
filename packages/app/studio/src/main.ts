@@ -8,8 +8,8 @@ import {initializeColors} from "@opendaw/studio-enums"
 import {Browser} from "@opendaw/lib-dom"
 
 if (Browser.isMobile()) {
-    document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100vh;padding:2em;text-align:center;font-family:system-ui;color:#ccc;background:#1a1a1a">
-        <div><h1>openDAW</h1><p>openDAW requires a desktop browser.<br>Please visit on a computer.</p></div>
+    document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100vh;padding:2em;text-align:center;font-family:Inter,system-ui,sans-serif;color:#f5f5f5;background:#121212">
+        <div><h1 style="font-family:Geist,system-ui,sans-serif;margin:0 0 0.5em;color:#39ff14">Creator Desk</h1><p>Creator Desk needs a desktop browser.<br>Please open it on a computer.</p></div>
     </div>`
 } else if (window.crossOriginIsolated) {
     const now = Date.now()
