@@ -2,7 +2,8 @@
   "$schema": "https://turborepo.com/schema.json",
   "globalEnv": [
     "CI",
-    "BRANCH_NAME"
+    "BRANCH_NAME",
+    "VERCEL"
   ],
   "tasks": {
     "build": {

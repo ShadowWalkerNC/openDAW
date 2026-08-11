@@ -12,14 +12,23 @@ export default defineConfig(({command}) => {
 
     const env = process.env.NODE_ENV as BuildInfo["env"]
     const date = Date.now()
-    const certsExist = existsSync(resolve(__dirname, "../../../certs/localhost-key.pem"))
+    const certKeyPath = resolve(__dirname, "../../../certs/localhost-key.pem")
+    const certPath = resolve(__dirname, "../../../certs/localhost.pem")
+    const certsExist = existsSync(certKeyPath) && existsSync(certPath)
+    const httpsConfig = certsExist ? {
+        key: readFileSync(certKeyPath),
+        cert: readFileSync(certPath)
+    } : undefined
 
-    // Determine base path for production CI builds
+    // Upstream SFTP deploy uses /main|dev/releases/<uuid>/ when CI=true.
+    // Vercel (and local static preview) must keep base "/" or assets 404 → blank page.
     const isCI = process.env.CI === "true"
+    const isVercel = process.env.VERCEL === "1"
     const branchName = process.env.BRANCH_NAME || "main"
     const isMainBranch = branchName === "main"
     const envFolder = isMainBranch ? "main" : "dev"
-    const base = (command === "build" && isCI) ? `/${envFolder}/releases/${uuid}/` : "/"
+    const useReleaseLayout = command === "build" && isCI && !isVercel
+    const base = useReleaseLayout ? `/${envFolder}/releases/${uuid}/` : "/"
 
     return {
         base,
@@ -58,11 +67,8 @@ export default defineConfig(({command}) => {
         clearScreen: false,
         server: {
             port: 8080,
-            host: "localhost",
-            https: command === "serve" ? {
-                key: readFileSync(resolve(__dirname, "../../../certs/localhost-key.pem")),
-                cert: readFileSync(resolve(__dirname, "../../../certs/localhost.pem"))
-            } : undefined,
+            host: true,
+            https: command === "serve" ? httpsConfig : undefined,
             headers: {
                 "Cross-Origin-Opener-Policy": "same-origin",
                 "Cross-Origin-Embedder-Policy": "require-corp",
@@ -78,11 +84,8 @@ export default defineConfig(({command}) => {
         },
         preview: {
             port: 8080,
-            host: "localhost",
-            https: certsExist ? {
-                key: readFileSync(resolve(__dirname, "../../../certs/localhost-key.pem")),
-                cert: readFileSync(resolve(__dirname, "../../../certs/localhost.pem"))
-            } : undefined,
+            host: true,
+            https: httpsConfig,
             headers: {
                 "Cross-Origin-Opener-Policy": "same-origin",
                 "Cross-Origin-Embedder-Policy": "require-corp",
